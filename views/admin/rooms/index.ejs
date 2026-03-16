@@ -1,0 +1,57 @@
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+  <div>
+    <h1 class="fw-bold mb-1">Manage Conference Rooms</h1>
+    <p class="text-secondary mb-0">Admins can add and edit the list of conference rooms.</p>
+  </div>
+</div>
+
+<div class="row g-4">
+  <div class="col-lg-4">
+    <div class="card shadow-sm border-0 rounded-4">
+      <div class="card-body p-4">
+        <h5 class="fw-bold mb-3">Add New Room</h5>
+        <form action="/admin/rooms" method="POST" class="row g-3">
+          <div class="col-12"><label class="form-label">Name</label><input type="text" name="name" class="form-control" required></div>
+          <div class="col-12"><label class="form-label">Location</label><input type="text" name="location" class="form-control"></div>
+          <div class="col-12"><label class="form-label">Capacity</label><input type="number" name="capacity" class="form-control" min="0"></div>
+          <div class="col-12"><label class="form-label">Description</label><textarea name="description" class="form-control" rows="3"></textarea></div>
+          <div class="col-12"><div class="form-check form-switch"><input class="form-check-input" type="checkbox" name="is_active" checked><label class="form-check-label">Active</label></div></div>
+          <div class="col-12 d-grid"><button class="btn btn-primary">Add Room</button></div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-8">
+    <div class="card shadow-sm border-0 rounded-4">
+      <div class="card-body p-4">
+        <h5 class="fw-bold mb-3">Existing Rooms</h5>
+        <div class="accordion" id="roomAccordion">
+          <% rooms.forEach((room, index) => { %>
+            <div class="accordion-item border rounded-4 mb-3 overflow-hidden">
+              <h2 class="accordion-header">
+                <button class="accordion-button <%= index !== 0 ? 'collapsed' : '' %>" type="button" data-bs-toggle="collapse" data-bs-target="#room-<%= room.id %>">
+                  <div class="w-100 d-flex justify-content-between align-items-center me-3">
+                    <span><strong><%= room.name %></strong> - <%= room.location || 'No location' %></span>
+                    <span class="badge <%= room.is_active ? 'text-bg-success' : 'text-bg-secondary' %>"><%= room.is_active ? 'Active' : 'Inactive' %></span>
+                  </div>
+                </button>
+              </h2>
+              <div id="room-<%= room.id %>" class="accordion-collapse collapse <%= index === 0 ? 'show' : '' %>" data-bs-parent="#roomAccordion">
+                <div class="accordion-body">
+                  <form action="/admin/rooms/<%= room.id %>/update" method="POST" class="row g-3">
+                    <div class="col-md-6"><label class="form-label">Name</label><input type="text" name="name" class="form-control" value="<%= room.name %>" required></div>
+                    <div class="col-md-6"><label class="form-label">Location</label><input type="text" name="location" class="form-control" value="<%= room.location || '' %>"></div>
+                    <div class="col-md-4"><label class="form-label">Capacity</label><input type="number" name="capacity" class="form-control" min="0" value="<%= room.capacity %>"></div>
+                    <div class="col-md-8"><label class="form-label">Description</label><textarea name="description" class="form-control" rows="2"><%= room.description || '' %></textarea></div>
+                    <div class="col-12"><div class="form-check form-switch"><input class="form-check-input" type="checkbox" name="is_active" <%= room.is_active ? 'checked' : '' %>><label class="form-check-label">Active</label></div></div>
+                    <div class="col-12 text-end"><button class="btn btn-primary">Save Changes</button></div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          <% }) %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

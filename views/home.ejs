@@ -1,0 +1,31 @@
+<section class="hero-card p-4 p-lg-5 rounded-4 bg-white shadow-sm">
+  <div class="row align-items-center g-4">
+    <div class="col-lg-7">
+      <span class="badge bg-primary-subtle text-primary mb-3">Online Conference Room Booking</span>
+      <h1 class="display-6 fw-bold">Reserve conference rooms online with live schedule visibility.</h1>
+      <p class="lead text-secondary">See occupied or vacant time slots, book recurring meetings, request online meeting support, and receive email reminders.</p>
+      <div class="d-flex gap-2 flex-wrap">
+        <a href="/register" class="btn btn-primary btn-lg">Create Account</a>
+        <a href="/login" class="btn btn-outline-primary btn-lg">Login</a>
+      </div>
+    </div>
+    <div class="col-lg-5">
+      <div class="card border-0 bg-body-tertiary rounded-4">
+        <div class="card-body">
+          <h5 class="fw-bold mb-3">Active Rooms</h5>
+          <div class="list-group list-group-flush">
+            <% rooms.forEach(room => { %>
+              <div class="list-group-item bg-transparent px-0 d-flex justify-content-between align-items-center">
+                <div>
+                  <div class="fw-semibold"><%= room.name %></div>
+                  <small class="text-secondary"><%= room.location || 'No location yet' %></small>
+                </div>
+                <span class="badge text-bg-light border"><%= room.capacity %> pax</span>
+              </div>
+            <% }) %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

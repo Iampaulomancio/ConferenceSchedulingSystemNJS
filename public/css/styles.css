@@ -1,0 +1,20 @@
+body {
+  min-height: 100vh;
+}
+
+.hero-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f4f7ff 100%);
+}
+
+.card, .accordion-item {
+  border-color: rgba(0,0,0,0.06) !important;
+}
+
+.fc .fc-toolbar-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.fc-event {
+  cursor: pointer;
+}

@@ -1,0 +1,87 @@
+<div class="row justify-content-center">
+  <div class="col-xl-9">
+    <div class="card shadow-sm border-0 rounded-4">
+      <div class="card-body p-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <div>
+            <h2 class="fw-bold mb-1">New Reservation</h2>
+            <p class="text-secondary mb-0">Book a conference room and optionally create recurring schedules.</p>
+          </div>
+        </div>
+
+        <form action="/bookings" method="POST" class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label">Conference Room</label>
+            <select name="room_id" class="form-select" required>
+              <option value="">Select a room</option>
+              <% rooms.forEach(room => { %>
+                <option value="<%= room.id %>"><%= room.name %> - <%= room.location || 'No location' %></option>
+              <% }) %>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Purpose</label>
+            <input type="text" name="purpose" class="form-control" placeholder="Team meeting / client call / training">
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Reserved By (Name)</label>
+            <input type="text" name="reserved_by_name" class="form-control" value="<%= currentUser.name %>" required>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Reserved By (Email)</label>
+            <input type="email" name="reserved_by_email" class="form-control" value="<%= currentUser.email %>" required>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Booking Date</label>
+            <input type="date" name="booking_date" class="form-control" required>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Start Time</label>
+            <input type="time" name="start_time" class="form-control" required>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">End Time</label>
+            <input type="time" name="end_time" class="form-control" required>
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">Meeting Type</label>
+            <select name="meeting_type" id="meeting_type" class="form-select" required>
+              <option value="onsite">On-site Meeting</option>
+              <option value="online">Online Meeting</option>
+            </select>
+          </div>
+          <div class="col-md-6 d-flex align-items-end">
+            <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" name="zoom_link_required" id="zoom_link_required" value="1">
+              <label class="form-check-label" for="zoom_link_required">Need Zoom / meeting link setup</label>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">Recurring</label>
+            <select name="recurrence_type" id="recurrence_type" class="form-select">
+              <option value="none">One-time only</option>
+              <option value="daily">Daily</option>
+              <option value="weekly">Weekly</option>
+              <option value="monthly">Monthly</option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Recurrence End Date</label>
+            <input type="date" name="recurrence_end_date" id="recurrence_end_date" class="form-control">
+            <div class="form-text">Required only for recurring meetings.</div>
+          </div>
+          <div class="col-12">
+            <label class="form-label">Notes</label>
+            <textarea name="notes" class="form-control" rows="3" placeholder="Additional notes for the admin or attendees"></textarea>
+          </div>
+          <div class="col-12 d-flex gap-2 justify-content-end">
+            <a href="/calendar" class="btn btn-outline-secondary">Back</a>
+            <button class="btn btn-primary">Save Reservation</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
